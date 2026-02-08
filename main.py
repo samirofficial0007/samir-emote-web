@@ -83,7 +83,7 @@ VALID_SERVERS = ['india', 'bangladesh', 'middleeast', 'pakistan', 'africa', 'bra
 BOT_CREDENTIALS = {
     'india': [
 
-       {'uid': '4474187851', 'password': 'F4B002C1C6513BA0A51EFD796E8C0B37BB7E9CF2D0A8DE6653404B1C4A7824F8'}
+       {'uid': '4493436895', 'password': '34024164EC77E2378806E8ECE6E58D7049B9C0D387C35E2F5EFAFF808B2BFAA4'}
       
         
         
