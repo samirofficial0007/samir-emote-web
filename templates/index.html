@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMIR EMOTE</title>
+    <!-- Font Awesome for icons -->
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- ===== POPUP MODAL SECTION ===== -->
+    <div id="welcome-modal-overlay">
+        <div id="welcome-modal">
+            <h2>SAMIR EMOTE !</h2>
+            <p>Join our community for updates and more tools.</p>
+            <div class="modal-buttons">
+                <a href="https://discord.gg/GwW8tcJPfq" target="_blank" class="modal-button discord">
+                    <i class="fab fa-discord"></i> Join Discord
+                </a>
+                  <a href="https://www.tiktok.com/@samirofficial_0007?_r=1&_t=ZS-93j9GmPB5Pd" target="_blank" class="social-button tiktok">
+                     <i class="fab fa-tiktok"></i> Join TikTok
+                       </a>
+
+                <a href="https://www.youtube.com/@samirofficial-0007" target="_blank" class="modal-button youtube">
+                    <i class="fab fa-youtube"></i> Subscribe on YouTube
+                </a>
+            </div>
+            <button id="close-modal-btn">Continue to Site</button>
+        </div>
+    </div>
+ 
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="container">
+        <header>
+            <h1> SAMIR EMOTE </h1>
+            <!-- Social Links Section -->
+            <div class="social-links">
+                <a href="https://discord.gg/Qf2CFsBGS7" target="_blank" class="social-button discord">
+                     <i class="fab fa-discord"></i> Join Discord
+                </a>
+                  <a href="https://www.tiktok.com/@samirofficial_0007?_r=1&_t=ZS-93j9GmPB5Pd" target="_blank" class="social-button tiktok">
+                     <i class="fab fa-tiktok"></i> Join TikTok
+                       </a>
+
+                <a href="https://www.youtube.com/@samirofficial-0007" target="_blank" class="modal-button youtube">
+                    <i class="fab fa-youtube"></i> Subscribe YouTube
+                </a>
+            </div>
+        </header>
+        
+        <!-- Monitoring Dashboard Section (New Vertical Light Theme) -->
+        <div class="monitoring-dashboard" id="monitoring-dashboard">
+            <div class="dashboard-header-container" id="toggle-dashboard">
+                <h2>User Monitoring <span id="user-count-display"></span></h2>
+                <i class="fas fa-plus toggle-icon" id="toggle-icon"></i> 
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="monitoring-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Requests Per Minute</div>
+                        <div class="metric-value" id="rpm-value">0</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-title">Unique Users Per Minute</div>
+                        <div class="metric-value" id="users-minute-value">0</div>
+                    </div>
+
+                </div>
+                <div class="last-updated" id="last-updated">Loading data...</div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label for="server"><i class="fas fa-server"></i> Server:</label>
+                <select id="server" class="server-select">
+                    <option value="india">India Server</option>
+                    <option value="bangladesh">Bangladesh Server</option>
+                    <option value="middleeast">Middle East Server (Coming Soon)</option>
+                    <option value="pakistan">Pakistan Server (Coming Soon)</option>
+                    <option value="africa">Africa Server </option>
+                    <option value="brazil">Brazil Server</option>
+                    <option value="europe">Europe Server </option>
+                    <option value="indonesia">Indonesia Server (Coming Soon)</option>
+                    <option value="malaysia">Malaysia Server (Coming Soon)</option>
+                    <option value="mexico">Mexico Server</option>
+                    <option value="russia">Russia Server </option>
+                    <option value="singapore">Singapore Server (Coming Soon)</option>
+                    <option value="taiwan">Taiwan Server (Coming Soon)</option>
+                    <option value="thailand">Thailand Server (Coming Soon)</option>
+                    <option value="unitedstates">United States Server (Coming Soon)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="team-code"><i class="fas fa-users"></i> Team Code:</label>
+                <input type="text" id="team-code" placeholder="Enter team code">
+            </div>
+            <div class="uid-grid">
+                <div class="input-group">
+                    <label for="uid1"><i class="fas fa-user"></i> UID 1:</label>
+                    <input type="text" class="uid-input" id="uid1" placeholder="Required">
+                </div>
+                 <div class="input-group">
+                    <label for="uid2"><i class="fas fa-user"></i> UID 2:</label>
+                    <input type="text" class="uid-input" id="uid2" placeholder="Optional">
+                </div>
+                 <div class="input-group">
+                    <label for="uid3"><i class="fas fa-user"></i> UID 3:</label>
+                    <input type="text" class="uid-input" id="uid3" placeholder="Optional">
+                </div>
+                 <div class="input-group">
+                    <label for="uid4"><i class="fas fa-user"></i> UID 4:</label>
+                    <input type="text" class="uid-input" id="uid4" placeholder="Optional">
+                </div>
+            </div>
+        </div>
+
+        <div class="result-display">
+            <h3>Result:</h3>
+            <pre id="result-box" class="api-url-box">Ready. Fill in the details and send an emote.</pre>
+        </div>
+
+        <div class="emote-list">
+            {% for emote in emotes %}
+            <div class="emote-item">
+                <img data-src="{{ url_for('static', filename='images/' + emote.image) }}" alt="{{ emote.name }}" class="lazy-emote-image">
+                <div class="emote-details">
+                    <p class="emote-name">{{ emote.name }}</p>
+                    <p class="emote-id">ID: {{ emote.id }}</p>
+                </div>
+                <button class="send-button" data-emote-id="{{ emote.id }}">Send</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+         // ===== SCRIPT FOR POPUP MODAL =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalOverlay = document.getElementById('welcome-modal-overlay');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+
+            closeModalBtn.addEventListener('click', function() {
+                modalOverlay.style.display = 'none';
+            });
+        });
+
+        // ===== SCRIPT FOR MINIMIZE/MAXIMIZE DASHBOARD (DEFAULT MINIMIZE) =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleHeader = document.getElementById('toggle-dashboard');
+            const dashboard = document.getElementById('monitoring-dashboard');
+            const toggleIcon = document.getElementById('toggle-icon');
+            
+            let isMinimized = localStorage.getItem('dashboardMinimized') !== 'false';
+
+            function updateDashboardState() {
+                if (isMinimized) {
+                    dashboard.classList.add('minimized');
+                    toggleIcon.classList.remove('fa-minus');
+                    toggleIcon.classList.add('fa-plus');
+                } else {
+                    dashboard.classList.remove('minimized');
+                    toggleIcon.classList.remove('fa-plus');
+                    toggleIcon.classList.add('fa-minus');
+                }
+                localStorage.setItem('dashboardMinimized', isMinimized);
+            }
+
+            updateDashboardState();
+
+            toggleHeader.addEventListener('click', function() {
+                isMinimized = !isMinimized;
+                updateDashboardState();
+            });
+        });
+
+        // ===== PASSWORD GATE (MANDATORY) =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const ACCESS_KEY = 'access_granted_v1';
+            const ACCESS_UNTIL = 'access_until_v1';
+            const TG_REQUIRED = 'tanvir'; // CHANGE THIS
+            const YT_REQUIRED = 'kiraxmurubbi'; // CHANGE THIS
+
+            const ONE_MINUTE_MS = 60 * 1000;
+
+            const gateOverlay = document.getElementById('password-gate-overlay');
+            const submitBtn = document.getElementById('pass-submit');
+            const tgInput = document.getElementById('tg-pass');
+            const ytInput = document.getElementById('yt-pass');
+            const err = document.getElementById('pass-error');
+
+            function showGate() { gateOverlay.style.display = 'block'; }
+            function hideGate() { gateOverlay.style.display = 'none'; }
+
+            function isAccessValid() {
+                const until = parseInt(localStorage.getItem(ACCESS_UNTIL) || '0', 10);
+                return Date.now() < until && localStorage.getItem(ACCESS_KEY) === 'true';
+            }
+
+            if (!isAccessValid()) {
+                // Clear any old flags and show gate
+                localStorage.removeItem(ACCESS_KEY);
+                localStorage.removeItem(ACCESS_UNTIL);
+                showGate();
+            }
+
+            submitBtn.addEventListener('click', function() {
+                const tgV = tgInput.value.trim();
+                const ytV = ytInput.value.trim();
+                if (tgV === TG_REQUIRED && ytV === YT_REQUIRED) {
+                    localStorage.setItem(ACCESS_KEY, 'true');
+                    localStorage.setItem(ACCESS_UNTIL, String(Date.now() + ONE_MINUTE_MS));
+                    hideGate();
+                } else {
+                    err.textContent = 'Incorrect passwords. Please try again.';
+                }
+            });
+        });
+
+
+
+        // ===== SCRIPT FOR SENDING EMOTES =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const emoteListContainer = document.querySelector('.emote-list');
+            const resultBox = document.getElementById('result-box');
+
+            if (!emoteListContainer) return;
+
+            emoteListContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('send-button')) {
+                    const sendButton = event.target;
+                    
+                    const server = document.getElementById('server').value;
+                    const teamCode = document.getElementById('team-code').value.trim();
+                    const emoteId = sendButton.getAttribute('data-emote-id');
+                    
+                    const uidInputs = document.querySelectorAll('.uid-input');
+                    const uids = [];
+                    uidInputs.forEach(input => {
+                        const uidValue = input.value.trim();
+                        if (uidValue) {
+                            uids.push(uidValue);
+                        }
+                    });
+
+                    if (!server) {
+                        resultBox.textContent = 'Error: Please select a server.';
+                        return;
+                    }
+                    if (!teamCode) {
+                        resultBox.textContent = 'Error: Please enter a team code.';
+                        return;
+                    }
+                    if (uids.length === 0) {
+                        resultBox.textContent = 'Error: Please enter at least one UID.';
+                        return;
+                    }
+                    
+                    resultBox.textContent = 'Sending request...';
+                    sendButton.disabled = true;
+                    sendButton.textContent = 'Sending...';
+
+                    const payload = {
+                        server: server,
+                        team_code: teamCode,
+                        emote_id: emoteId,
+                        uids: uids
+                    };
+                    
+                    fetch('/send_emote', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        resultBox.textContent = JSON.stringify(data, null, 2); 
+                    })
+                    .catch(error => {
+                        console.error('Fetch Error:', error);
+                        resultBox.textContent = 'Error communicating with the server. See console for details.';
+                    })
+                    .finally(() => {
+                        sendButton.disabled = false;
+                        sendButton.textContent = 'Send';
+                    });
+                }
+            });
+        });
+
+        // ===== SCRIPT FOR MONITORING DASHBOARD (Fetch logic) =====
+        function fetchMonitoringData() {
+            const lastUpdatedEl = document.getElementById('last-updated');
+            fetch('/monitoring')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('rpm-value').textContent = data.requests_per_minute;
+                    document.getElementById('users-minute-value').textContent = data.unique_users_minute;
+                    const userCountDisplay = document.getElementById('user-count-display');
+                    if (userCountDisplay) {
+                        userCountDisplay.textContent = `${data.unique_users_minute}/1000`;
+                        if (data.unique_users_minute > 1000) {
+                            userCountDisplay.classList.add('blink-red');
+                        } else {
+                            userCountDisplay.classList.remove('blink-red');
+                        }
+                    }
+                    
+                    const lastUpdatedElement = document.getElementById('last-updated');
+                    lastUpdatedEl.textContent = 'Last updated: ' + data.timestamp;
+                    lastUpdatedEl.classList.remove('error'); 
+                })
+                .catch(error => {
+                    console.error('Error fetching monitoring data:', error);
+                    lastUpdatedEl.textContent = 'Error loading data.';
+                    lastUpdatedEl.classList.add('error'); 
+                });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchMonitoringData();
+            setInterval(fetchMonitoringData, 5000); 
+        });
+
+        // ===== SCRIPT FOR LAZY LOADING EMOTE IMAGES ON SCROLL =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyEmoteImages = document.querySelectorAll('.lazy-emote-image');
+            const delay = 100; // 0.1 seconds delay
+            
+            // Create Intersection Observer for scroll-based lazy loading
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        // Load image after 0.5 second delay when it comes into view
+                        setTimeout(() => {
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.removeAttribute('data-src');
+                            }
+                            observer.unobserve(img); // Stop observing once loaded
+                        }, delay);
+                    }
+                });
+            }, {
+                rootMargin: '50px' // Start loading 50px before image comes into view
+            });
+            
+            // Observe all lazy images
+            lazyEmoteImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        });
+    </script>
+</body>
+</html>

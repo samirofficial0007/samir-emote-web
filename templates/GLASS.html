@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SAMIR EMOTE - Login</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --glass-bg: rgba(15,23,42,.55);
+    --glass-bd: rgba(255,255,255,.14);
+    --txt: #e5e7eb;
+    --subtxt:#cbd5e1;
+    --accent1:#00fff0;
+    --accent2:#00f6ff;
+    --accent3:#8b5cf6;
+  }
+  html,body{height:100%}
+  body{
+    margin:0; font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--txt);
+    background: radial-gradient(90vmax 90vmax at 50% -20%, #1e293b, #020617 50%, #000 100%);
+    overflow:hidden; display:grid; place-items:center;
+  }
+  /* aurora background */
+  body::before{
+    content:""; position:fixed; inset:-40vmax; z-index:0;
+    background:
+      radial-gradient(60vmax 60vmax at 20% 10%, rgba(56,189,248,.12), transparent 60%),
+      radial-gradient(70vmax 70vmax at 80% 0%,  rgba(139,92,246,.13), transparent 60%),
+      radial-gradient(50vmax 50vmax at 50% 110%, rgba(16,185,129,.10), transparent 60%);
+    filter: blur(30px); animation: drift 18s linear infinite alternate;
+  }
+  @keyframes drift{from{transform:translate3d(-2%,-1%,0) rotate(.2deg)} to{transform:translate3d(2%,1%,0) rotate(-.2deg)}}
+
+  #password-gate-overlay{position:fixed; inset:0; z-index:10; display:grid; place-items:center; padding:20px;
+    background: rgba(0,0,0,.45); -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%);
+  }
+
+  .glass-card{
+    position:relative; width:min(420px,92vw); min-height:600px; border-radius:28px; padding:28px 22px 22px;
+    background:var(--glass-bg); border:1px solid var(--glass-bd); box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 40px rgba(0,255,255,.08);
+    display:flex; flex-direction:column; gap:16px; overflow:hidden;
+  }
+  /* animated RGB neon ring */
+  .glass-card::before{content:""; position:absolute; inset:-2px; border-radius:30px;
+    background: conic-gradient(from 0deg,#ff0057,#ff8a00,#ffe600,#00ff95,#00e5ff,#0077ff,#7a00ff,#ff00ff,#ff0057);
+    filter: blur(10px) saturate(160%); opacity:.9; z-index:-1; animation: spin 7s linear infinite;
+  }
+  .glass-card::after{content:""; position:absolute; inset:0; border-radius:28px; background: var(--glass-bg); border:1px solid var(--glass-bd);
+    box-shadow: inset 0 0 40px rgba(0,255,255,.08); z-index:0;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Premium badge */
+  .premium-badge{position:absolute; top:10px; right:10px; display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; font-weight:800; font-size:11px; letter-spacing:.3px; color:#fff9d6;
+    background: linear-gradient(135deg, rgba(255,215,0,.25), rgba(255,215,0,.12), rgba(255,255,255,.05)); border:1px solid rgba(255,215,0,.35);
+    -webkit-backdrop-filter: blur(8px) saturate(180%); backdrop-filter: blur(8px) saturate(180%);
+    box-shadow: 0 0 12px rgba(255,215,0,.4), inset 0 0 6px rgba(255,255,255,.25); z-index:5;
+  }
+  .crown{width:16px; height:16px; filter: drop-shadow(0 0 6px rgba(255,215,0,.6));}
+
+  /* Title */
+  h2{margin:6px 0 4px; font-size:28px; font-weight:900; letter-spacing:.3px; text-align:center;
+    background: linear-gradient(90deg,#ff0057,#ff8a00,#ffe600,#00ff95,#00e5ff,#0077ff,#7a00ff,#ff00ff,#ff0057);
+    background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:hueflow 6s linear infinite;
+    text-shadow:0 0 10px rgba(255,255,255,.08), 0 0 18px rgba(0,255,255,.20), 0 0 32px rgba(139,92,246,.25);
+  }
+  @keyframes hueflow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  .subtitle{margin:0 0 10px; color:var(--subtxt); text-align:center; font-size:14px}
+
+  label{font-size:13px; color:#a5b4fc; margin-bottom:6px}
+  .field{display:flex; flex-direction:column; gap:8px}
+  input[type="text"], input[type="password"]{width:100%; padding:14px 12px; border-radius:19px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:var(--txt); font-size:15px; outline:none; transition:.25s ease}
+  input[type="text"]:focus, input[type="password"]:focus{border-color:rgba(0,255,255,.85); box-shadow:0 0 24px rgba(0,255,255,.35), 0 0 60px rgba(139,92,246,.25), inset 0 0 10px rgba(255,255,255,.06); background:rgba(255,255,255,.08)}
+
+  .actions{display:flex; flex-direction:column; gap:10px; margin-top:6px}
+  .btn{width:100%; padding:13px 16px; border:none; border-radius:19px; font-weight:700; font-size:15px; cursor:pointer; transition:.2s ease}
+  .btn-primary{background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3)); color:#000; box-shadow: 0 0 18px rgba(0,255,255,.35)}
+  .btn-primary:hover{transform: translateY(-1px); box-shadow: 0 0 28px rgba(0,255,255,.7)}
+
+  .links{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  .link-pill{display:inline-flex; align-items:center; gap:8px; text-decoration:none; padding:9px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.14); color:#e0e7ff; font-size:13px; background: rgba(255,255,255,.06); transition:.2s ease}
+  .link-pill:hover{background: rgba(0,255,255,.18); box-shadow: 0 0 12px rgba(0,255,255,.35)}
+  .ico{width:16px; height:16px; display:inline-block}
+
+  #pass-error{min-height:18px; font-size:13px; color:#f87171; text-align:center}
+  @media (max-width:420px){.glass-card{min-height:660px; padding:26px 18px}}
+</style>
+</head>
+<body>
+<div id="password-gate-overlay">
+  <div class="glass-card">
+    <div class="premium-badge" title="Premium">
+      <svg class="crown" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="goldgrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"  stop-color="#FFE082"/>
+            <stop offset="50%" stop-color="#FFC107"/>
+            <stop offset="100%" stop-color="#FFEE93"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#goldgrad)" d="M3 7l3.5 4 3.5-3 3.5 3L17 7l4 3v7H3V10zM5 17h14v-4.5l-2.6 1.7-3.6-3.1-3.6 3.1L5 12.5V17z"/>
+      </svg>
+      PREMIUM
+    </div>
+
+    <div style="z-index:1">
+      <h2>SAMIR EMOTE  !</h2>
+      <p class="subtitle">Enter your credentials to continue</p>
+    </div>
+
+    <!-- DESIGN with your JS method (no real POST) -->
+    <div style="z-index:1; display:flex; flex-direction:column; gap:14px; margin-top:6px;">
+      <div class="field">
+        <label for="tg-pass">Username</label>
+        <input id="tg-pass" type="text" autocomplete="username" placeholder="Enter username">
+      </div>
+      <div class="field">
+        <label for="yt-pass">Password</label>
+        <input id="yt-pass" type="password" autocomplete="current-password" placeholder="Enter password">
+      </div>
+      <div id="pass-error"></div>
+      <div class="actions">
+        <button id="pass-submit" class="btn btn-primary" type="button">Continue</button>
+      </div>
+
+      <div class="links">
+        <a href="https://discord.gg/kWaCjhqBcN" target="_blank" class="link-pill" aria-label="Discord">
+          <svg class="ico" viewBox="0 0 24 24" fill="#5865F2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.317 4.369A19.791 19.791 0 0 0 16.558 3c-.2.353-.431.83-.59 1.2a18.27 18.27 0 0 0-7.936 0c-.159-.37-.39-.847-.59-1.2a19.736 19.736 0 0 0-3.758 1.369C1.46 9.195.676 13.9 1.076 18.556A19.9 19.9 0 0 0 7.1 20.997c.3-.412.567-.852.787-1.317a12.94 12.94 0 0 1-1.24-.6c.104-.075.206-.153.304-.234 2.39 1.115 5.011 1.115 7.4 0 .1.081.201.159.304.234-.4.2-.82.405-1.24.6.22.465.488.905.787 1.317a19.9 19.9 0 0 0 6.024-2.441c.476-5.279-.813-9.94-2.909-14.243ZM9.509 15.293c-1.021 0-1.856-.94-1.856-2.093 0-1.154.82-2.094 1.856-2.094s1.872.94 1.872 2.094c0 1.153-.836 2.093-1.872 2.093Zm4.986 0c-1.021 0-1.856-.94-1.856-2.093 0-1.154.82-2.094 1.856-2.094s1.872.94 1.872 2.094c0 1.153-.836 2.093-1.872 2.093Z"/></svg>
+          Discord
+        </a>
+        <a href="https://www.youtube.com/@samirofficial-0007" target="_blank" class="link-pill" aria-label="YouTube">
+          <svg class="ico" viewBox="0 0 24 24" fill="#FF0033" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M23.5 6.2s-.2-1.6-.8-2.3c-.8-.8-1.7-.8-2.2-.9C17.6 2.7 12 2.7 12 2.7h0s-5.6 0-8.5.3c-.5.1-1.4.1-2.2.9-.6.7-.8 2.3-.8 2.3S0 8.2 0 10.3v1.9c0 2.1.3 4.1.3 4.1s.2 1.6.8 2.3c.8.8 1.9.7 2.4.8 1.7.2 7.5.3 8.5.3s8.5 0 8.5-.3c.5-.1 1.6 0 2.4-.8.6-.7.8-2.3.8-2.3s.3-2 .3-4.1v-1.9c0-2.1-.3-4.1-.3-4.1ZM9.6 14.7V7.8l6.4 3.4-6.4 3.5Z"/></svg>
+          YouTube
+        </a>
+        <a href="https://www.tiktok.com/@samirofficial_0007?_r=1&_t=ZS-93j9GmPB5Pd" target="_blank" class="link-pill" aria-label="TikTok">
+          <svg class="ico" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="#00F2EA" d="M34 14.9a11.7 11.7 0 0 0 6.9 2.2v6.1a17.7 17.7 0 0 1-6.9-1.4v10.2c0 6.5-5.3 11.7-11.7 11.7S10.6 38.5 10.6 32s5.3-11.7 11.7-11.7c1 0 2 .1 3 .4v6.4c-.9-.5-1.9-.8-3-.8-3.1 0-5.7 2.6-5.7 5.7s2.6 5.7 5.7 5.7 5.7-2.6 5.7-5.7V6.3h5.9V14.9z"/>
+            <path fill="#FF004F" d="M34 12.6a11.8 11.8 0 0 0 6.9 2.3v3.1a17.8 17.8 0 0 1-6.9-1.4v10.2c0  6.5-5.3 11.7-11.7 11.7-5.2 0-9.6-3.4-11-8.1 1.7 1.5 3.9 2.4 6.4 2.4 6.5 0 11.7-5.3 11.7-11.7V6.3H34v6.3z"/>
+          </svg>
+          TikTok
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Your original username/password gate method (no real backend call)
+  const submitBtn = document.getElementById('pass-submit');
+  const err = document.getElementById('pass-error');
+
+  submitBtn.addEventListener('click', () => {
+    const tg = document.getElementById('tg-pass').value.trim();
+    const yt = document.getElementById('yt-pass').value.trim();
+
+    if (!tg || !yt) {
+      err.textContent = "Both fields required!";
+      err.style.color = "#f87171";
+      return;
+    }
+
+    if (tg === "samir" && yt === "0007") {
+      err.style.color = "#22c55e";
+      err.textContent = "Login successful! Redirecting...";
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
+    } else {
+      err.style.color = "#f87171";
+      err.textContent = "Incorrect password!";
+    }
+  });
+</script>
+
+</body>
+</html>

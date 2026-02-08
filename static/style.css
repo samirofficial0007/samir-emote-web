@@ -1,0 +1,737 @@
+/* ===== GLOBAL STYLES & UI REFRESH ===== */
+ 
+ 
+body {
+  font-family: 'Poppins'; 
+  margin: 0;
+    padding: 0;
+    background-color: #000000; /* pure black */
+    color: #f0f0f0; 
+
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+
+    margin-bottom: 35px;
+
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 30px 0;
+    background: linear-gradient(90deg, #4f46e5, #8b5cf6, #ec4899, #f43f5e, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradient 8s ease infinite, float 6s ease-in-out infinite;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 3px;
+    position: relative;
+    display: inline-block;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #4f46e5, #8b5cf6, #ec4899, #f43f5e, #f59e0b);
+    background-size: 300% 300%;
+    animation: gradient 8s ease infinite;
+    border-radius: 3px;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+/* ===== SOCIAL LINKS STYLES ===== */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.social-button {
+    text-decoration: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95em;
+}
+
+.social-button i {
+    margin-right: 8px;
+}
+
+.social-button.discord { 
+    background-color: #5865F2; 
+}
+
+.social-button.tiktok { 
+   
+  background-color: #010101; /* TikTok black base */
+
+}
+
+.social-button.youtube { 
+    background-color: #FF0000; 
+}
+
+.social-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.social-button.discord:hover { 
+    background-color: #4752C4; 
+}
+
+.social-button.tiktok:hover { 
+    background-color: #000; /* TikTok pink hover */
+}
+
+.social-button.youtube:hover { 
+    background-color: #CC0000; 
+}
+
+/* ===== POPUP MODAL STYLES ===== */
+#welcome-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+#welcome-modal {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+#welcome-modal h2 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+#welcome-modal p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.modal-button {
+    text-decoration: none;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-button i {
+    margin-right: 10px;
+}
+
+.modal-button.discord { background-color: #5865F2; }
+.modal-button.tiktok { background-color: #000; }
+.modal-button.youtube { background-color: #FF0000; }
+
+.modal-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#close-modal-btn {
+    padding: 10px 25px;
+    border: none;
+    background-color: #27ae60;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+#close-modal-btn:hover {
+    background-color: #229954;
+}
+
+
+/* ===== IMPROVED INPUT SECTION ===== */
+.input-section {
+    background: rgba(20, 20, 20, 0.55);             /* translucent dark layer */
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    /* Glass effect (light blur for performance) */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    /* Subtle border + glow */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.4),
+        inset 0 0 6px rgba(255, 255, 255, 0.05);
+
+    /* Performance hint for GPU acceleration */
+    will-change: backdrop-filter, transform;
+    transform: translateZ(0);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==== Label ==== */
+.input-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #b5c7ff; /* soft neon tint */
+}
+
+.input-group label i {
+    margin-right: 8px;
+    color: #00bfff;
+}
+
+/* ==== Input Fields ==== */
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(20, 20, 20, 0.55);           /* translucent glass */
+    color: #f0f0f0;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    font-size: 1em;
+}
+
+/* Neon Glow on Hover / Focus */
+.input-group input:hover,
+.input-group input:focus {
+    border-color: rgba(0, 180, 255, 0.8);
+    box-shadow:
+        0 0 6px rgba(0, 180, 255, 0.4),
+        0 0 12px rgba(0, 180, 255, 0.2);
+    outline: none;
+    background: rgba(25, 25, 25, 0.65);
+}
+
+/* ==== Server Select (Dropdown) ==== */
+.server-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(20, 20, 20, 0.55);
+    color: #f0f0f0;
+    font-size: 1em;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23b5c7ff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* Neon Glow Hover + Focus */
+.server-select:hover,
+.server-select:focus {
+    border-color: rgba(0, 180, 255, 0.8);
+    box-shadow:
+        0 0 6px rgba(0, 180, 255, 0.4),
+        0 0 12px rgba(0, 180, 255, 0.2);
+    background: rgba(25, 25, 25, 0.65);
+    outline: none;
+}
+
+/* ==== UID Grid Layout ==== */
+.uid-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+/* ===== RESULT DISPLAY ===== */
+.result-display {
+    background: rgba(20, 20, 20, 0.55); /* translucent dark glass */
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    color: #f0f0f0;
+
+    /* soft blur for glass depth */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    /* subtle glowing border */
+    border: 1px solid rgba(0, 255, 255, 0.12);
+    box-shadow:
+        0 0 10px rgba(0, 255, 255, 0.05),
+        inset 0 0 6px rgba(0, 255, 255, 0.05);
+
+    transition: 0.3s ease;
+}
+
+/* Glow intensifies slightly on hover */
+.result-display:hover {
+    border-color: rgba(0, 255, 255, 0.3);
+    box-shadow:
+        0 0 14px rgba(0, 255, 255, 0.25),
+        inset 0 0 8px rgba(0, 255, 255, 0.15);
+}
+
+/* ===== HEADING INSIDE ===== */
+.result-display h3 {
+    margin-top: 0;
+    color: #00e5ff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.25);
+}
+
+/* ===== CODE BOX AREA ===== */
+.api-url-box {
+    background: rgba(10, 10, 10, 0.6); /* dark glass layer */
+    color: #c9f6ff;
+    padding: 15px;
+    border-radius: 10px;
+
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    box-shadow:
+        0 0 10px rgba(0, 255, 255, 0.1),
+        inset 0 0 8px rgba(0, 255, 255, 0.08);
+    
+    word-break: break-all;
+    white-space: pre-wrap;
+    min-height: 60px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Subtle neon glow pulse effect (optional) */
+@keyframes neonPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 10px rgba(0, 255, 255, 0.15),
+            inset 0 0 8px rgba(0, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 16px rgba(0, 255, 255, 0.3),
+            inset 0 0 10px rgba(0, 255, 255, 0.15);
+    }
+}
+
+.api-url-box:hover {
+    animation: neonPulse 2s ease-in-out infinite;
+}
+
+/* ===== REDESIGNED EMOTE LIST ===== */
+.emote-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+/* ==== Premium Glass Card with inner edge & corner glints ==== */
+.emote-item {
+  position: relative;
+  padding: 15px;
+  border-radius: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* glass base */
+  background: rgba(16, 18, 22, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  /* depth + subtle inner highlight */
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+/* Inner-stroke & side glow like the reference (very light, low-CPU) */
+.emote-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  /* inner stroke via mask + a faint cyan corner glow */
+  padding: 1px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 40%),
+    radial-gradient(120% 60% at 100% 0, rgba(0, 212, 255, 0.22), rgba(0,0,0,0) 60%);
+  -webkit-mask: 
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; /* Safari/Chrome */
+  mask-composite: exclude;     /* Firefox */
+}
+
+/* Small neon dot like the header screenshot */
+.emote-item::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #9ad1ff, #7a5bfd 60%, transparent 65%);
+  box-shadow: 0 0 10px rgba(122, 91, 253, 0.7);
+  pointer-events: none;
+}
+
+/* Emote image */
+.emote-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+/* Name line styled like a title bar */
+.emote-name {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin: 4px 0 2px;
+  text-transform: uppercase;
+}
+
+/* Subtext */
+.emote-id {
+  color: #9aa3ad;
+  font-size: 0.8em;
+  margin: 0;
+}
+
+/* Dotted separator (like that thin dashed line in the screenshot) */
+.emote-details {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.emote-details::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -8px;
+  height: 1px;
+  opacity: 0.25;
+  background:
+    radial-gradient(currentColor 1px, transparent 1px) repeat-x;
+  background-size: 6px 1px;
+}
+
+/* Hover lift + faint neon rim */
+.emote-item:hover {
+  transform: translateY(-5px);
+  background: rgba(20, 22, 26, 0.62);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.38),
+    0 0 14px rgba(0, 255, 255, 0.10);
+}
+
+/* Optional: make the little dot glow more on hover */
+.emote-item:hover::before {
+  box-shadow: 0 0 14px rgba(122, 91, 253, 0.9);
+}
+
+/* Keep your existing button styles; add a subtle neon on hover if you like */
+.send-button {
+  padding: 10px 15px;
+  background-color: #569eeb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 700;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+  box-shadow: 0 0 4px rgba(0, 140, 255, 0.3);
+}
+.send-button:hover {
+  background-color: #3a88da;
+  box-shadow:
+    0 0 6px rgba(0, 180, 255, 0.55),
+    0 0 12px rgba(0, 180, 255, 0.28),
+    inset 0 0 4px rgba(0, 180, 255, 0.2);
+  transform: translateY(-1px);
+}
+.send-button:active {
+    transform: scale(0.97);
+    background: linear-gradient(145deg, rgba(0, 140, 255, 0.7), rgba(0, 255, 255, 0.5));
+    box-shadow:
+        0 0 8px rgba(0, 180, 255, 0.45),
+        inset 0 0 6px rgba(0, 180, 255, 0.3);
+    transition: transform 0.1s ease, box-shadow 0.25s ease;
+}
+
+/* Disabled state with frosted look (consistent with glass theme) */
+.send-button:disabled {
+    background: rgba(60, 60, 60, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    box-shadow: none;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+
+
+/* ================================================= */
+/* ===== VERTICAL LIGHT THEME DASHBOARD (FIXED) ===== */
+/* ================================================= */
+
+.monitoring-dashboard {
+  background: rgba(255, 255, 255, 0.08);  /* subtle transparent white */
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f0f0f0;
+    overflow: hidden;
+
+    /* Efficient glass effect */
+    backdrop-filter: blur(4px);              /* small blur for low CPU */
+    -webkit-backdrop-filter: blur(4px);      /* Safari support */
+    
+    /* Minimal shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    
+    /* GPU optimization */
+    will-change: backdrop-filter;
+    transform: translateZ(0);
+}
+
+/* Header/Button Styling */
+.dashboard-header-container {
+     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    
+    /* === Glass Black Effect === */
+    background: rgba(15, 15, 15, 0.6);             /* translucent dark layer */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px 10px 0 0;
+    backdrop-filter: blur(4px);                    /* light blur for low CPU */
+    -webkit-backdrop-filter: blur(4px);
+    
+    /* === Shadow & Transition === */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    will-change: backdrop-filter;
+}
+
+.dashboard-header-container:hover {
+   background: rgba(25, 25, 25, 0.75);            /* slightly darker on hover */
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);  /* subtle neon glow */
+}
+
+.monitoring-dashboard h2 {
+    color: #00bfff;                                /* neon-cyan accent */
+    margin: 0; 
+    font-size: 1em;
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(0, 200, 255, 0.3);   /* gentle glow on text */
+}
+
+/* Icon for +/- */
+.toggle-icon {
+    color: #888;
+    font-size: 1em;
+    transition: color 0.2s, transform 0.3s;
+}
+
+.dashboard-header-container:hover .toggle-icon {
+    color: #007BFF;
+}
+
+/* Content Area */
+.dashboard-content {
+    padding: 15px;
+    transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+    max-height: 500px;
+    opacity: 1;
+}
+
+/* Minimize State */
+.monitoring-dashboard.minimized .dashboard-content {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+.monitoring-dashboard.minimized .dashboard-header-container {
+    border-bottom: none;
+}
+.monitoring-dashboard.minimized .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/* Metric Grid (Vertical Stack) */
+.monitoring-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.metric-card {
+    background-color: #f7f9fc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #e9edf1;
+}
+
+.metric-title {
+    font-size: 0.75em;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.metric-value {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #007BFF;
+}
+
+/* Status text at the bottom */
+.last-updated {
+    font-size: 0.75em;
+    color: #999;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.last-updated.error {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+
+/* ===== BLINKING RED EFFECT ===== */
+@keyframes blink-red {
+    0% { color: inherit; }
+    50% { color: red; }
+    100% { color: inherit; }
+}
+
+.blink-red {
+    animation: blink-red 1s infinite;
+}
+
+/* ===== MOBILE RESPONSIVE STYLES (Max Width 768px) ===== */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    /* Emote List compactness */
+    .emote-list {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 10px;
+    }
+
+    .emote-item {
+        padding: 10px 5px; 
+    }
+    
+    .emote-item img {
+        width: 50px; 
+        height: 50px;
+    }
+    
+    .emote-name {
+        font-size: 11px;
+    }
+    
+    .emote-id {
+        font-size: 9px;
+    }
+    
+    .send-button {
+        padding: 6px 5px;
+        font-size: 11px;
+    }
+}
